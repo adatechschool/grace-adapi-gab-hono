@@ -19,16 +19,36 @@ router.get("/:id", async (req, res) => {
   res.json(rows[0]);
 });
 
-/* POST */
+//POST
 router.post("/", async (req, res) => {
-  const { title, description } = req.body;
-  console.log(req.body);
-
-  const { rows } = await pool.query(
-    "INSERT INTO resources (title, description) VALUES ($1, $2) RETURNING *",
-    [title, description]
+  const { title } = req.body;
+  await pool.query(
+    "INSERT INTO resources (title) VALUES ($1)",
+    [title]
   );
-  res.status(201).json(rows[0]);
+    res.send("The resource title has been integrated");
 });
+
+//DELETE
+router.delete("/", async (req, res) => {
+  const { id } = req.body;
+  await pool.query(
+    "DELETE FROM resources WHERE id = $1",
+    [id]
+  );
+  res.send("The resource has been deleted");
+});
+
+//PUT
+router.put("/", async (req, res) => {
+  const { id } = req.body;
+  const { title } = req.body;
+  await pool.query(
+    "UPDATE resources SET title = $2 WHERE id = $1",
+    [id, title]
+  );
+  res.send("The resource has been updated");
+});
+
 
 export default router;
