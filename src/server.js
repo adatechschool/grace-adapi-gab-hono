@@ -14,7 +14,9 @@ app.listen(3000, () => {
 
 import resourcesRoutes from "./routes/resources.routes.js";
 import skillsRoutes from "./routes/skills.routes.js";
+import themesRoutes from "./routes/themes.routes.js";
 
 
 app.use("/resources", resourcesRoutes);
 app.use("/skills", skillsRoutes);
+app.use("/themes", themesRoutes);
